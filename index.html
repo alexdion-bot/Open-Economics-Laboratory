@@ -281,7 +281,7 @@
       <div class="stats">
         <div class="stat"><div class="v">14</div><div class="k">Universities represented</div></div>
         <div class="stat"><div class="v">4</div><div class="k">Continents</div></div>
-        <div class="stat"><div class="v">8</div><div class="k">Fields of research</div></div>
+        <div class="stat"><div class="v">20+</div><div class="k">Fields of research</div></div>
         <div class="stat"><div class="v">12</div><div class="k">Seminars a year</div></div>
       </div>
     </div>
@@ -312,7 +312,7 @@
       </div>
       <div>
         <div class="fields" id="field-grid"></div>
-        <p class="prose" style="margin-top:22px">Fields are not assigned. Members propose their own questions and the group reviews the research design. The eight fields above are working categories. The Laboratory follows the Journal of Economic Literature classification for the record.</p>
+        <p class="prose" style="margin-top:22px">Fields are not assigned. Members propose their own questions and the group reviews the research design. The categories above are a subset used for the seminar programme. The Laboratory follows the Journal of Economic Literature classification, which has twenty top level fields.</p>
         <a class="btn ghost" style="margin-top:20px" href="#/topics">All fields</a>
       </div>
     </div>
@@ -562,7 +562,7 @@ function renderTopics(){
     <a class="back" href="#fields">Back to fields</a>
     <span class="kicker b">Fields</span>
     <h1 class="pg-title">Classification of fields</h1>
-    <p class="pg-note">The Laboratory records the field of each working paper using the Journal of Economic Literature classification system. The twenty top level codes of that system are listed below. The eight working categories shown on the main page are a subset used for the seminar programme.</p>
+    <p class="pg-note">The Laboratory records the field of each working paper using the Journal of Economic Literature classification system. That system has twenty top level codes, listed below. The categories shown on the main page are a subset used for the seminar programme.</p>
     <ol class="jel">
       ${JEL.map(([c,l])=>`<li><span class="code">${c}</span><span class="lab">${esc(l)}</span></li>`).join('')}
     </ol>
