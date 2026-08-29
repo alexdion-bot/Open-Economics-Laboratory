@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Open Economics Laboratory</title>
+<meta name="description" content="An independent research laboratory in economics run by undergraduate, graduate and PhD students.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF6;
+    --ink:#2C2A3B;
+    --ink-2:#57536B;
+    --muted:#8A8598;
+
+    --blue:#4A63A8;   --blue-s:#DEE4F6;
+    --rose:#DE8497;   --rose-s:#FAE2E6;
+    --amber:#E8AC49;  --amber-s:#FBEED6;
+    --sage:#79A489;   --sage-s:#E1EDE4;
+
+    --display:"Fraunces",Georgia,serif;
+    --body:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+
+    --gutter:clamp(20px,5vw,60px);
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);overflow-x:hidden;
+    font-family:var(--body);font-size:16.5px;line-height:1.68;-webkit-font-smoothing:antialiased}
+  a{color:inherit;-webkit-tap-highlight-color:rgba(74,99,168,.12)}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:8px}
+  ::selection{background:var(--amber-s)}
+  svg{display:block}
+  img{max-width:100%;display:block}
+  [hidden]{display:none !important}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+
+  /* ---------- nav ---------- */
+  header.nav{position:sticky;top:0;z-index:60;background:rgba(251,250,246,.9);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+  .logo{text-decoration:none;font-family:var(--display);font-weight:500;font-size:17px;
+    letter-spacing:-.01em;line-height:1.15}
+  .nav-links{display:flex;gap:4px}
+  .nav-links a{font-size:14.5px;color:var(--ink-2);text-decoration:none;padding:7px 13px;
+    border-radius:999px;transition:.22s;white-space:nowrap}
+  .nav-links a:hover{background:var(--blue-s);color:var(--blue)}
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;
+    width:44px;height:44px;padding:0 12px;background:none;border:0;cursor:pointer;flex:none}
+  .nav-toggle span{display:block;width:20px;height:1.8px;background:var(--ink);border-radius:2px;transition:.25s}
+
+  @media(max-width:900px){
+    .logo{font-size:15.5px;max-width:60%}
+    .nav-toggle{display:flex}
+    .nav-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.4px) rotate(45deg)}
+    .nav-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.4px) rotate(-45deg)}
+    .nav-links{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;gap:2px;
+      background:var(--paper);padding:8px var(--gutter) 22px;box-shadow:0 18px 30px -22px rgba(44,42,59,.4)}
+    .nav-links.open{display:flex}
+    .nav-links a{font-size:16px;padding:12px 14px}
+  }
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--body);
+    font-size:15px;font-weight:500;text-decoration:none;padding:13px 26px;border-radius:999px;
+    background:var(--blue);color:#fff;border:1.5px solid var(--blue);transition:.24s}
+  .btn:hover{background:#3B5296;border-color:#3B5296}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:rgba(74,99,168,.32)}
+  .btn.ghost:hover{background:#fff;border-color:var(--ink)}
+  .btn.tbd{background:#fff;color:var(--ink-2);border-color:rgba(74,99,168,.25);cursor:default}
+
+  /* ---------- shared ---------- */
+  .kicker{display:inline-block;font-size:13px;font-weight:500;padding:5px 14px;
+    border-radius:999px;margin:0 0 20px}
+  .kicker.b{background:var(--blue-s);color:var(--blue)}
+  .kicker.r{background:var(--rose-s);color:#B85C71}
+  .kicker.a{background:var(--amber-s);color:#B0781C}
+  .kicker.s{background:var(--sage-s);color:#4E7A5D}
+
+  h2{font-family:var(--display);font-weight:400;font-size:clamp(27px,3.6vw,44px);
+    line-height:1.14;letter-spacing:-.018em;margin:0}
+  h3{font-family:var(--display);font-weight:500;font-size:19px;letter-spacing:-.01em;margin:0 0 9px}
+  .prose{max-width:58ch;color:var(--ink-2);font-size:16.5px}
+  .prose p{margin:0 0 1.05em}
+  .prose p:last-child{margin-bottom:0}
+
+  .sec{padding:clamp(54px,8vw,108px) 0}
+  .split{display:grid;grid-template-columns:minmax(0,.36fr) minmax(0,.64fr);gap:clamp(26px,5vw,68px)}
+  @media(max-width:900px){.split{grid-template-columns:1fr;gap:26px}}
+  .head-col{position:sticky;top:96px;align-self:start}
+  @media(max-width:900px){.head-col{position:static}}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--blue-s);border-radius:0 0 44px 44px;
+    padding:clamp(48px,9vw,110px) 0 clamp(48px,7vw,90px)}
+  @media(max-width:640px){.hero{border-radius:0 0 26px 26px}}
+  .h1{font-family:var(--display);font-weight:300;font-size:clamp(38px,7vw,86px);
+    line-height:1.04;letter-spacing:-.026em;margin:0 0 24px;max-width:11ch}
+  .h1 em{font-style:italic;font-weight:400;color:var(--blue)}
+  .hero-lede{font-size:clamp(16.5px,1.8vw,20px);line-height:1.6;color:var(--ink-2);
+    max-width:54ch;margin:0 0 30px}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+  @media(max-width:420px){.hero-cta .btn{width:100%}}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:clamp(38px,6vw,68px)}
+  @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:#fff;border-radius:20px;padding:18px 20px}
+  .stat .v{font-family:var(--display);font-weight:400;font-size:clamp(27px,3.4vw,36px);line-height:1}
+  .stat .k{font-size:13.5px;color:var(--muted);margin-top:8px;line-height:1.4}
+  .stat:nth-child(1) .v{color:var(--blue)}
+  .stat:nth-child(2) .v{color:var(--rose)}
+  .stat:nth-child(3) .v{color:var(--amber)}
+  .stat:nth-child(4) .v{color:var(--sage)}
+
+  /* ---------- statement ---------- */
+  .thesis{font-family:var(--display);font-weight:300;font-size:clamp(24px,3.6vw,42px);
+    line-height:1.18;letter-spacing:-.02em;margin:0 0 26px;max-width:22ch}
+
+  /* ---------- fields ---------- */
+  .fields{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:640px){.fields{grid-template-columns:1fr}}
+  .field{background:#fff;border-radius:22px;padding:20px 22px 22px;display:flex;gap:15px;
+    align-items:flex-start;transition:transform .26s;text-decoration:none;color:inherit}
+  .field:hover{transform:translateY(-3px)}
+  .field .seal{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center}
+  .field .nm{font-family:var(--display);font-weight:500;font-size:17px;letter-spacing:-.01em;line-height:1.3}
+  .field .ds{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+  /* ---------- stages ---------- */
+  .stages{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:700px){.stages{grid-template-columns:1fr}}
+  .stage{border-radius:22px;padding:24px 24px 26px}
+  .stage:nth-child(1){background:var(--blue-s)}
+  .stage:nth-child(2){background:var(--rose-s)}
+  .stage:nth-child(3){background:var(--amber-s)}
+  .stage:nth-child(4){background:var(--sage-s)}
+  .stage .n{font-size:13px;font-weight:500;opacity:.65;display:block;margin-bottom:13px}
+  .stage p{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+
+  /* ---------- illustration slot ---------- */
+  .shot{margin-top:14px;border-radius:22px;background:var(--sage-s);
+    aspect-ratio:16/7;display:grid;place-items:center;padding:20px}
+  @media(max-width:640px){.shot{aspect-ratio:3/2}}
+  .shot .cap{font-size:13.5px;color:#4E7A5D;text-align:center}
+
+  /* ---------- papers ---------- */
+  .paper{display:flex;gap:16px;align-items:baseline;background:#fff;border-radius:18px;
+    padding:18px 20px;margin-bottom:10px;text-decoration:none;transition:transform .24s}
+  .paper:hover{transform:translateX(4px)}
+  .paper .id{font-size:13.5px;font-weight:500;color:var(--blue);flex:none;width:64px}
+  .paper .tt{font-family:var(--display);font-weight:500;font-size:17px;letter-spacing:-.01em;line-height:1.35}
+  .paper .au{display:block;font-family:var(--body);font-size:13.5px;color:var(--muted);
+    font-weight:400;margin-top:5px}
+
+  /* ---------- board ---------- */
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:820px){.board{grid-template-columns:1fr}}
+  .mem{background:#fff;border-radius:22px;padding:22px}
+  .mem .av{width:50px;height:50px;border-radius:50%;margin-bottom:15px}
+  .mem:nth-child(1) .av{background:var(--blue-s)}
+  .mem:nth-child(2) .av{background:var(--rose-s)}
+  .mem:nth-child(3) .av{background:var(--amber-s)}
+  .mem .nm{font-family:var(--display);font-weight:500;font-size:17.5px}
+  .mem .rl{font-size:14.5px;color:var(--ink-2);margin-top:12px;line-height:1.55}
+
+  /* ---------- network ---------- */
+  .net{display:flex;flex-wrap:wrap;gap:8px}
+  .net a{font-size:14px;padding:9px 16px;border-radius:999px;background:#fff;
+    color:var(--ink-2);transition:.22s;line-height:1.35;text-decoration:none;display:inline-block}
+  .net a:nth-child(4n+1):hover{background:var(--blue-s);color:var(--blue)}
+  .net a:nth-child(4n+2):hover{background:var(--rose-s);color:#B85C71}
+  .net a:nth-child(4n+3):hover{background:var(--amber-s);color:#B0781C}
+  .net a:nth-child(4n+4):hover{background:var(--sage-s);color:#4E7A5D}
+
+  /* ---------- join ---------- */
+  .join-box{background:var(--amber-s);border-radius:34px;padding:clamp(32px,6vw,64px);
+    display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;position:relative;overflow:hidden}
+  @media(max-width:820px){.join-box{grid-template-columns:1fr;align-items:start;gap:26px}}
+  .join-box .deco{position:absolute;right:-40px;top:-50px;opacity:.5;pointer-events:none}
+  @media(max-width:640px){.join-box .deco{display:none}}
+  .join-box>div,.join-box .btn{position:relative;z-index:2}
+
+  /* ---------- footer ---------- */
+  footer{padding:40px 0 48px}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-size:14px;color:var(--muted)}
+  @media(max-width:640px){.foot{flex-direction:column;gap:8px}}
+
+  /* ================= subpages ================= */
+  .sub{padding:clamp(40px,6vw,72px) 0 clamp(56px,8vw,100px)}
+  .back{display:inline-block;font-size:14.5px;color:var(--muted);text-decoration:none;
+    margin-bottom:26px;padding:6px 14px;border-radius:999px;background:#fff;transition:.22s}
+  .back:hover{color:var(--ink)}
+  .pg-title{font-family:var(--display);font-weight:300;font-size:clamp(32px,5vw,58px);
+    line-height:1.06;letter-spacing:-.024em;margin:0 0 18px}
+  .pg-note{max-width:60ch;color:var(--ink-2);margin:0 0 34px}
+
+  .uni-head{display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center;
+    margin-bottom:40px}
+  @media(max-width:700px){.uni-head{grid-template-columns:1fr;gap:20px}}
+  .logo-slot{background:var(--blue-s);border-radius:20px;aspect-ratio:3/2;display:grid;
+    place-items:center;text-align:center;font-size:13px;color:var(--blue);padding:14px}
+
+  .profiles{display:grid;gap:14px}
+  .profile{background:#fff;border-radius:24px;padding:clamp(22px,3vw,32px);
+    display:grid;grid-template-columns:1fr 200px;gap:clamp(20px,3vw,36px)}
+  .profile .pic{grid-column:2;grid-row:1;background:var(--rose-s);border-radius:18px;
+    aspect-ratio:4/5;display:grid;place-items:center;text-align:center;
+    font-size:13px;color:#B85C71;padding:14px;align-self:start}
+  .profile .txt{grid-column:1;grid-row:1;min-width:0}
+  @media(max-width:700px){
+    .profile{grid-template-columns:1fr}
+    .profile .pic{grid-column:1;grid-row:1;max-width:180px;aspect-ratio:4/5}
+    .profile .txt{grid-column:1;grid-row:2}
+  }
+  .p-name{font-family:var(--display);font-weight:500;font-size:clamp(21px,2.6vw,26px);
+    letter-spacing:-.015em;margin:0 0 18px;line-height:1.2}
+  .meta{margin:0 0 22px;display:grid;gap:14px}
+  .meta>div{display:grid;gap:2px}
+  .meta dt{font-size:13px;color:var(--muted)}
+  .meta dd{margin:0;font-size:15.5px;color:var(--ink)}
+  .p-sub{font-family:var(--display);font-weight:500;font-size:16px;margin:0 0 6px;color:var(--ink)}
+  .p-body{margin:0 0 20px;font-size:15.5px;color:var(--ink-2);line-height:1.6}
+  .p-body:last-child{margin-bottom:0}
+
+  .jel{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(max-width:760px){.jel{grid-template-columns:1fr}}
+  .jel li{background:#fff;border-radius:18px;padding:16px 20px;display:flex;gap:14px;align-items:baseline}
+  .jel .code{font-family:var(--display);font-weight:500;font-size:17px;color:var(--blue);
+    flex:none;width:22px}
+  .jel .lab{font-size:15px;color:var(--ink-2);line-height:1.5}
+
+  .empty{background:#fff;border-radius:18px;padding:22px;color:var(--muted);font-size:15.5px}
+
+  /* ---------- reveal ---------- */
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .75s ease,transform .75s cubic-bezier(.16,.9,.3,1)}
+  .rv.in{opacity:1;transform:none}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition-duration:.001ms!important}
+    .rv{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top">Open Economics Laboratory</a>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span>
+    </button>
+    <nav class="nav-links" id="menu">
+      <a href="#about">About</a><a href="#fields">Fields</a><a href="#process">Process</a>
+      <a href="#papers">Papers</a><a href="#network">Network</a><a href="#join">Join</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<div id="view-sub" hidden></div>
+
+<div id="view-home">
+
+  <section class="hero">
+    <div class="wrap">
+      <h1 class="h1">Open Economics <em>Laboratory</em></h1>
+      <p class="hero-lede">An independent research laboratory in economics. Its members are undergraduate, graduate and PhD students at fourteen universities in Europe, Asia and North America.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#join">Apply to join</a>
+        <a class="btn ghost" href="#/papers">Working papers</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="v">14</div><div class="k">Universities represented</div></div>
+        <div class="stat"><div class="v">4</div><div class="k">Continents</div></div>
+        <div class="stat"><div class="v">8</div><div class="k">Fields of research</div></div>
+        <div class="stat"><div class="v">12</div><div class="k">Seminars a year</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="wrap split rv">
+      <div class="head-col">
+        <span class="kicker b">About</span>
+        <h2>Purpose and scope.</h2>
+      </div>
+      <div>
+        <p class="thesis">The Laboratory produces empirical research. It does not issue policy recommendations.</p>
+        <div class="prose">
+          <p>The Laboratory was founded in 2026 as an independent research group. Membership is open to undergraduate, graduate and PhD students in economics.</p>
+          <p>Activity is organised around a monthly seminar and a working paper series. Drafts are presented, discussed by assigned discussants, revised, and then released together with the code and data used to produce them.</p>
+          <p>Subject coverage is broad and standards of evidence are fixed. A result is published whether or not it confirms the initial hypothesis, including when the estimate is imprecise or the effect is not distinguishable from zero.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="fields">
+    <div class="wrap split rv">
+      <div class="head-col">
+        <span class="kicker r">Fields</span>
+        <h2>Fields of research.</h2>
+      </div>
+      <div>
+        <div class="fields" id="field-grid"></div>
+        <p class="prose" style="margin-top:22px">Fields are not assigned. Members propose their own questions and the group reviews the research design. The eight fields above are working categories. The Laboratory follows the Journal of Economic Literature classification for the record.</p>
+        <a class="btn ghost" style="margin-top:20px" href="#/topics">All fields</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="process">
+    <div class="wrap split rv">
+      <div class="head-col">
+        <span class="kicker a">Process</span>
+        <h2>Stages of review.</h2>
+      </div>
+      <div>
+        <div class="stages">
+          <div class="stage"><span class="n">Stage one</span><h3>Proposal</h3><p>A note of two pages setting out the question, the data and the source of variation. Circulated one week before the session.</p></div>
+          <div class="stage"><span class="n">Stage two</span><h3>Seminar</h3><p>Ninety minutes, monthly, online. Two discussants are assigned in advance. The first half of the session addresses identification rather than results.</p></div>
+          <div class="stage"><span class="n">Stage three</span><h3>Revision</h3><p>The author responds in writing to each comment received. Code and data are deposited in the shared repository.</p></div>
+          <div class="stage"><span class="n">Stage four</span><h3>Publication</h3><p>One member of the advisory board reads the final draft. The paper is then released under a permanent number. Papers are not withdrawn. A revised version supersedes the earlier one, which remains available.</p></div>
+        </div>
+        <div class="shot"><span class="cap">Illustration to be determined</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="papers">
+    <div class="wrap split rv">
+      <div class="head-col">
+        <span class="kicker s">Working papers</span>
+        <h2>Working paper series.</h2>
+      </div>
+      <div>
+        <div id="paper-preview"></div>
+        <p class="prose" style="margin-top:22px">Each paper is released with a replication package. A paper is treated as complete once its code runs on a clean machine.</p>
+        <a class="btn ghost" style="margin-top:20px" href="#/papers">All working papers</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="board">
+    <div class="wrap split rv">
+      <div class="head-col">
+        <span class="kicker b">Advisory board</span>
+        <h2>Advisory board.</h2>
+      </div>
+      <div>
+        <div class="board">
+          <div class="mem"><div class="av"></div><div class="nm">To be announced</div><p class="rl">Reads final drafts in applied microeconomics and advises on identification.</p></div>
+          <div class="mem"><div class="av"></div><div class="nm">To be announced</div><p class="rl">Chairs the annual review of the working paper series.</p></div>
+          <div class="mem"><div class="av"></div><div class="nm">To be announced</div><p class="rl">Advises on seminar design and the training of discussants.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="network">
+    <div class="wrap split rv">
+      <div class="head-col">
+        <span class="kicker r">Network</span>
+        <h2>Where members study.</h2>
+      </div>
+      <div>
+        <div class="net" id="net-list"></div>
+        <p class="prose" style="margin-top:22px">Members are undergraduate, graduate and PhD students at the universities listed above. The Laboratory is run by students and remains independent. It is not affiliated with, hosted by or endorsed by any of these institutions.</p>
+        <p class="prose" style="margin-top:14px">Sessions are scheduled within the overlap between European, East Asian and North American time zones. Recordings and written discussant notes are circulated within 48 hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="join" style="padding-top:0">
+    <div class="wrap rv">
+      <div class="join-box">
+        <svg class="deco" width="260" height="220" viewBox="0 0 260 220" aria-hidden="true">
+          <g style="mix-blend-mode:multiply">
+            <circle cx="150" cy="90" r="86" fill="#F3DDB0" opacity=".8"/>
+            <circle cx="212" cy="140" r="60" fill="#F6D3DA" opacity=".7"/>
+          </g>
+        </svg>
+        <div>
+          <span class="kicker a">Membership</span>
+          <h2 style="max-width:19ch">Applications.</h2>
+          <p class="prose" style="margin-top:18px">Membership is open to undergraduate, graduate and PhD students in economics. Applicants send one paragraph describing the research question they intend to work on and their current institution. There is no membership fee.</p>
+        </div>
+        <span class="btn tbd">Email to be determined</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>Open Economics Laboratory</span>
+    <span>Email to be determined</span>
+    <span>Working papers under CC BY 4.0</span>
+  </div>
+</footer>
+
+<script>
+/* ---------------- data ---------------- */
+const UNIS=[
+  {s:'sciences-po',n:'Sciences Po'},
+  {s:'columbia',n:'Columbia University'},
+  {s:'eth-zurich',n:'ETH Zürich'},
+  {s:'nus',n:'National University of Singapore'},
+  {s:'peking',n:'Peking University'},
+  {s:'tokyo',n:'University of Tokyo'},
+  {s:'hku',n:'University of Hong Kong'},
+  {s:'paris-saclay',n:'Université Paris-Saclay'},
+  {s:'ut-austin',n:'UT Austin'},
+  {s:'bocconi',n:'Bocconi'},
+  {s:'sorbonne',n:'Sorbonne Université'},
+  {s:'keio',n:'Keio University'},
+  {s:'paris-1',n:'Université Paris 1 Panthéon-Sorbonne'},
+  {s:'escp',n:'ESCP'}
+];
+
+const ICON={
+  micro:'<path d="M3 18c4 0 3-12 9-12s5 12 9 12" fill="none" stroke="#4A63A8" stroke-width="2" stroke-linecap="round"/>',
+  macro:'<path d="M3 17c3-1 4-9 7-9s3 6 5 6 3-4 6-6" fill="none" stroke="#DE8497" stroke-width="2" stroke-linecap="round"/>',
+  dev:'<circle cx="8" cy="9" r="4.5" fill="none" stroke="#E8AC49" stroke-width="2"/><circle cx="15" cy="15" r="4.5" fill="none" stroke="#E8AC49" stroke-width="2"/>',
+  pol:'<path d="M12 20V9M12 9C12 5 9 4 6 4M12 9c0-4 3-5 6-5" fill="none" stroke="#79A489" stroke-width="2" stroke-linecap="round"/>',
+  trade:'<path d="M4 15c5-8 11-8 16 0" fill="none" stroke="#4A63A8" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="9" r="2.4" fill="#4A63A8"/>',
+  metrics:'<path d="M12 4v16M8 8h8M8 16h8" fill="none" stroke="#DE8497" stroke-width="2" stroke-linecap="round"/>',
+  hist:'<path d="M4 18c3 0 4-4 6-4s2 3 4 3 3-8 6-8" fill="none" stroke="#E8AC49" stroke-width="2" stroke-linecap="round"/>',
+  behav:'<circle cx="7" cy="8" r="2" fill="#79A489"/><circle cx="14" cy="6" r="2" fill="#79A489"/><circle cx="10" cy="15" r="2" fill="#79A489"/><circle cx="17" cy="14" r="2" fill="#79A489"/>'
+};
+
+const FIELDS=[
+  {s:'applied-microeconomics',n:'Applied microeconomics',d:'Labour, education, health, firms',t:'blue',i:'micro'},
+  {s:'macroeconomics-and-growth',n:'Macroeconomics and growth',d:'Monetary and fiscal dynamics',t:'rose',i:'macro'},
+  {s:'development-economics',n:'Development economics',d:'Field evidence, institutions, poverty',t:'amber',i:'dev'},
+  {s:'political-economy',n:'Political economy',d:'Voting, conflict, state capacity',t:'sage',i:'pol'},
+  {s:'trade-and-international-finance',n:'Trade and international finance',d:'Firms, flows, exchange rates',t:'blue',i:'trade'},
+  {s:'econometric-methods',n:'Econometric methods',d:'Identification, inference, replication',t:'rose',i:'metrics'},
+  {s:'economic-history',n:'Economic history',d:'Long series, natural experiments',t:'amber',i:'hist'},
+  {s:'behavioural-and-experimental',n:'Behavioural and experimental',d:'Lab and online designs',t:'sage',i:'behav'}
+];
+
+/* Papers listed in reverse order of release. */
+const PAPERS=[
+  {id:'OEL 003',t:'Forthcoming',f:'econometric-methods'},
+  {id:'OEL 002',t:'Forthcoming',f:'development-economics'},
+  {id:'OEL 001',t:'Forthcoming',f:'applied-microeconomics'}
+];
+
+/* Journal of Economic Literature classification, top level codes. */
+const JEL=[
+  ['A','General economics and teaching'],
+  ['B','History of economic thought, methodology, and heterodox approaches'],
+  ['C','Mathematical and quantitative methods'],
+  ['D','Microeconomics'],
+  ['E','Macroeconomics and monetary economics'],
+  ['F','International economics'],
+  ['G','Financial economics'],
+  ['H','Public economics'],
+  ['I','Health, education, and welfare'],
+  ['J','Labor and demographic economics'],
+  ['K','Law and economics'],
+  ['L','Industrial organization'],
+  ['M','Business administration and business economics, marketing, accounting, personnel economics'],
+  ['N','Economic history'],
+  ['O','Economic development, innovation, technological change, and growth'],
+  ['P','Economic systems'],
+  ['Q','Agricultural and natural resource economics, environmental and ecological economics'],
+  ['R','Urban, rural, regional, real estate, and transportation economics'],
+  ['Y','Miscellaneous categories'],
+  ['Z','Other special topics']
+];
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fieldName=s=>(FIELDS.find(f=>f.s===s)||{n:'To be determined'}).n;
+
+/* ---------------- home rendering ---------------- */
+document.getElementById('field-grid').innerHTML=FIELDS.map(f=>`
+  <a class="field" href="#/field/${f.s}">
+    <span class="seal" style="background:var(--${f.t}-s)">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">${ICON[f.i]}</svg>
+    </span>
+    <span><span class="nm">${esc(f.n)}</span><span class="ds" style="display:block">${esc(f.d)}</span></span>
+  </a>`).join('');
+
+document.getElementById('net-list').innerHTML=UNIS.map(u=>
+  `<a href="#/university/${u.s}">${esc(u.n)}</a>`).join('');
+
+const paperRow=p=>`
+  <a class="paper" href="#/field/${p.f}">
+    <span class="id">${esc(p.id)}</span>
+    <span class="tt">${esc(p.t)}<span class="au">${esc(fieldName(p.f))}</span></span>
+  </a>`;
+document.getElementById('paper-preview').innerHTML=PAPERS.map(paperRow).join('');
+
+/* ---------------- subpage templates ---------------- */
+function profileBlock(uniName){
+  return `
+  <article class="profile">
+    <div class="pic">Picture to be determined</div>
+    <div class="txt">
+      <h2 class="p-name">Name to be determined</h2>
+      <dl class="meta">
+        <div><dt>Status</dt><dd>To be determined</dd></div>
+        <div><dt>Fields of research</dt><dd>To be determined</dd></div>
+        <div><dt>Institution</dt><dd>${esc(uniName)}</dd></div>
+      </dl>
+      <h3 class="p-sub">Biography</h3>
+      <p class="p-body">To be determined</p>
+      <h3 class="p-sub">Working papers</h3>
+      <p class="p-body">To be determined</p>
+    </div>
+  </article>`;
+}
+
+function renderUni(slug){
+  const u=UNIS.find(x=>x.s===slug);
+  if(!u)return goHome();
+  showSub(`
+  <section class="sub"><div class="wrap">
+    <a class="back" href="#network">Back to network</a>
+    <span class="kicker r">Network</span>
+    <h1 class="pg-title">${esc(u.n)}</h1>
+    <div class="uni-head">
+      <div class="logo-slot">Logo to be determined</div>
+      <p class="pg-note" style="margin:0">Members of the Laboratory enrolled at this institution. The Laboratory is run by students and remains independent. It is not affiliated with, hosted by or endorsed by ${esc(u.n)}.</p>
+    </div>
+    <div class="profiles">
+      ${profileBlock(u.n)}${profileBlock(u.n)}${profileBlock(u.n)}
+    </div>
+  </div></section>`);
+}
+
+function renderField(slug){
+  const f=FIELDS.find(x=>x.s===slug);
+  if(!f)return goHome();
+  const list=PAPERS.filter(p=>p.f===slug);
+  showSub(`
+  <section class="sub"><div class="wrap">
+    <a class="back" href="#fields">Back to fields</a>
+    <span class="kicker b">Field</span>
+    <h1 class="pg-title">${esc(f.n)}</h1>
+    <p class="pg-note">${esc(f.d)}. Working papers released by the Laboratory in this field are listed below, in reverse order of release.</p>
+    ${list.length?list.map(paperRow).join(''):'<div class="empty">No working paper has been released in this field.</div>'}
+  </div></section>`);
+}
+
+function renderTopics(){
+  showSub(`
+  <section class="sub"><div class="wrap">
+    <a class="back" href="#fields">Back to fields</a>
+    <span class="kicker b">Fields</span>
+    <h1 class="pg-title">Classification of fields</h1>
+    <p class="pg-note">The Laboratory records the field of each working paper using the Journal of Economic Literature classification system. The twenty top level codes of that system are listed below. The eight working categories shown on the main page are a subset used for the seminar programme.</p>
+    <ol class="jel">
+      ${JEL.map(([c,l])=>`<li><span class="code">${c}</span><span class="lab">${esc(l)}</span></li>`).join('')}
+    </ol>
+  </div></section>`);
+}
+
+function renderPapers(){
+  showSub(`
+  <section class="sub"><div class="wrap">
+    <a class="back" href="#papers">Back to home</a>
+    <span class="kicker s">Working papers</span>
+    <h1 class="pg-title">Working paper series</h1>
+    <p class="pg-note">Papers are listed in reverse order of release, the most recent first. Each paper carries a permanent number and is released with a replication package. Papers are not withdrawn. A revised version supersedes the earlier one, which remains available.</p>
+    ${PAPERS.map(paperRow).join('')}
+  </div></section>`);
+}
+
+/* ---------------- router ---------------- */
+const home=document.getElementById('view-home');
+const sub=document.getElementById('view-sub');
+let onSub=false;
+
+function showSub(html){
+  home.hidden=true;sub.innerHTML=html;sub.hidden=false;
+  onSub=true;window.scrollTo(0,0);
+}
+function showHome(){
+  sub.hidden=true;sub.innerHTML='';home.hidden=false;
+}
+function goHome(){location.hash='';showHome();window.scrollTo(0,0);onSub=false;}
+
+function route(){
+  const h=location.hash;
+  if(!h.startsWith('#/')){
+    const wasSub=onSub;
+    showHome();onSub=false;
+    if(wasSub){
+      const el=h.length>1?document.querySelector(h):null;
+      if(el){el.scrollIntoView()}else{window.scrollTo(0,0)}
+    }
+    return;
+  }
+  const p=h.slice(2).split('/').filter(Boolean);
+  if(p[0]==='university')return renderUni(p[1]);
+  if(p[0]==='field')return renderField(p[1]);
+  if(p[0]==='topics')return renderTopics();
+  if(p[0]==='papers')return renderPapers();
+  goHome();
+}
+window.addEventListener('hashchange',route);
+route();
+
+/* ---------------- reveal ---------------- */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ---------------- mobile menu ---------------- */
+const tg=document.querySelector('.nav-toggle'),ml=document.getElementById('menu');
+tg.addEventListener('click',()=>{
+  const open=ml.classList.toggle('open');
+  tg.setAttribute('aria-expanded',open);
+});
+ml.addEventListener('click',e=>{
+  if(e.target.tagName==='A'){ml.classList.remove('open');tg.setAttribute('aria-expanded','false')}
+});
+</script>
+</body>
+</html>
